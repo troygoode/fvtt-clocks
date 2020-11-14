@@ -1,7 +1,7 @@
 export class Clock {
   constructor ({ theme, size, progress } = {}) {
     const p = progress < 0 ? 0 : progress < size ? progress : size;
-    this._theme = theme || 'blue';
+    this._theme = theme || 'dog_blink_blue';
     this._size = parseInt(size || 4);
     this._progress = p || 0;
   }
@@ -20,7 +20,7 @@ export class Clock {
 
   get image () {
     return { 
-      img: `/modules/clocks/artwork/${this.theme}_${this.size}clock_${this.progress}.png`,
+      img: `/modules/clocks/themes/${this.theme}/${this.size}clock_${this.progress}.png`,
       width: 350,
       height: 350
     };
@@ -68,11 +68,11 @@ export class Clock {
     let newTheme;
 
     switch(old.theme) {
-      case 'blue':
-        newTheme = 'yellow';
+      case 'dog_blink_blue':
+        newTheme = 'dog_blink_yellow';
         break;
       default:
-        newTheme = 'blue';
+        newTheme = 'dog_blink_blue';
         break;
     }
 

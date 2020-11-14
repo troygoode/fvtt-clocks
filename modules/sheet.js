@@ -1,5 +1,5 @@
 import { Clock } from "./clock.js";
-import { systemMappings } from "./systems.js";
+import { systemMappings } from "./config.js";
 
 export class ClockSheet extends ActorSheet {
   static get defaultOptions() {

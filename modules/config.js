@@ -1,5 +1,9 @@
 import { Clock } from "./clock.js";
 
+export const themes = {
+  list: ['dog_blink_blue', 'dog_blink_yellow']
+};
+
 const defaultLoadClock = (actor) => {
   return new Clock({
     progress: actor.getFlag("clocks", "progress"),

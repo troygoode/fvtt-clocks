@@ -18,7 +18,7 @@
   color: rgb(25, 24, 19);
   margin: 0;
 }
-.clocks.sheet .clock-name input:hover {
+.clocks.sheet .clock-name.editable input:hover, .clocks.sheet .clock-name.editable input:focus {
   border: 1px solid rgb(25, 24, 19);
   box-shadow: 0 0 10px #ff0000;
 }
@@ -48,6 +48,12 @@
 }
 .clocks.sheet .clock-config .clock-config-group label {
   margin-right: 3px;
+}
+.clocks.sheet .clock-config .clock-config-group select {
+  width: 50px;
+}
+.clocks.sheet .clock-config .clock-config-group.theme select {
+  width: 175px;
 }
 .clocks.sheet .clock-debug {
   background-color: #ff0000;

@@ -1,6 +1,6 @@
 import { Clock } from "./clock.js";
 import { ClockSheet } from "./sheet.js";
-import { systemMappings } from "./systems.js";
+import { systemMappings } from "./config.js";
 
 const log = (message) => console.log(`Foundry VTT | Clocks | ${message}`);
 
