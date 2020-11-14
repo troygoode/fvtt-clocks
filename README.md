@@ -7,7 +7,7 @@ A module that lets you create [Blades in the Dark](https://bladesinthedark.com/)
 1. Copy this link and use it in Foundry's Module Manager to install the module.
 
 ```
-https://raw.githubusercontent.com/troygoode/fvtt-clocks/master/module.json
+https://raw.githubusercontent.com/troygoode/fvtt-clocks/main/module.json
 ```
     
 2. Enable the Module in your World's module settings.
