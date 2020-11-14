@@ -72,7 +72,7 @@ Hooks.on("renderTileHUD", async (_hud, html, tile) => {
     }
 
     await t.update({
-      ...newClock.image,
+      img: newClock.image.img,
       flags: newClock.flags
     });
   });
