@@ -19,11 +19,20 @@ export class ClockSheet extends ActorSheet {
     const oldClock = supportedSystem.loadClock(sheet);
 
     let newClock = oldClock;
-    const progress = !event.submitter ? undefined : event.submitter.name === 'minus' ? -1 : event.submitter.name === 'plus' ? 1 : undefined;
-    if (progress === 1) {
-      newClock = newClock.increment();
-    } else if (progress === -1) {
-      newClock = newClock.decrement();
+    switch (event.submitter ? event.submitter.name : undefined) {
+      case 'minus':
+        newClock = newClock.decrement();
+        break;
+      case 'plus':
+        newClock = newClock.increment();
+        break;
+      case 'redo':
+        newClock = new Clock({
+          progress: 0,
+          size: newClock.size,
+          theme: newClock.theme
+        });
+        break;
     }
     newClock = new Clock({
       progress: newClock.progress,

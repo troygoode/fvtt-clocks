@@ -1,12 +1,27 @@
 <form class="{{cssClass}} clock-form" autocomplete="off">
   {{#if editable}}
   <div class="clock-progress">
+    {{#if (lte actor.flags.clocks.progress 0)}}
+    <button name="minus" disabled>
+      <i class="fa fa-minus"></i>
+    </button>
+    {{else}}
     <button name="minus">
       <i class="fa fa-minus"></i>
     </button>
+    {{/if}}
+    <button name="redo">
+      <i class="fa fa-redo"></i>
+    </button>
+    {{#if (gte actor.flags.clocks.progress actor.flags.clocks.size)}}
+    <button name="plus" disabled>
+      <i class="fa fa-plus"></i>
+    </button>
+    {{else}}
     <button name="plus">
       <i class="fa fa-plus"></i>
     </button>
+    {{/if}}
   </div>
   {{/if}}
   <div class="clock-image">
