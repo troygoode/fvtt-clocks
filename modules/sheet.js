@@ -26,7 +26,7 @@ export class ClockSheet extends ActorSheet {
       case 'plus':
         newClock = newClock.increment();
         break;
-      case 'redo':
+      case 'reset':
         newClock = new Clock({
           progress: 0,
           size: newClock.size,
@@ -44,7 +44,8 @@ export class ClockSheet extends ActorSheet {
     const tokens = this.actor.getActiveTokens();
     for (const t of tokens) {
       await t.update({
-        img: newClock.image.img
+        img: newClock.image.img,
+        scale: t.data.scale || 1
       });
     }
 

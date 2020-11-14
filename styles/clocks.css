@@ -5,7 +5,7 @@
   width: 140px;
   margin: 0;
 }
-.clocks.sheet .clock-progress button[name=redo] {
+.clocks.sheet .clock-progress button[name=reset] {
   width: 40px;
 }
 .clocks.sheet .clock-progress button:disabled {
