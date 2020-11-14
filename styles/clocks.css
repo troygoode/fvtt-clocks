@@ -1,6 +1,27 @@
 .clocks.sheet .clock-progress {
   text-align: center;
 }
+.clocks.sheet .clock-name {
+  height: 60px;
+  text-align: left;
+}
+.clocks.sheet .clock-name input {
+  height: 40px;
+  line-height: 48px;
+  font-size: 32px;
+  width: 100%;
+  background: none;
+  border: 1px solid transparent;
+  padding: 1px 3px;
+  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  border-radius: 3px;
+  color: rgb(25, 24, 19);
+  margin: 0;
+}
+.clocks.sheet .clock-name input:hover {
+  border: 1px solid rgb(25, 24, 19);
+  box-shadow: 0 0 10px #ff0000;
+}
 .clocks.sheet .clock-progress button {
   width: 140px;
   margin: 0;

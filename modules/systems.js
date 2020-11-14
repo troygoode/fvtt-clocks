@@ -8,8 +8,9 @@ const defaultLoadClock = (actor) => {
   });
 };
 
-const defaultSaveActor = async (actor, clock) => {
+const defaultSaveActor = async (actor, name, clock) => {
   await actor.update({
+    name: name,
     img: clock.image.img,
     token: {
       img: clock.image.img

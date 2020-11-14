@@ -1,5 +1,14 @@
 <form class="{{cssClass}} clock-form" autocomplete="off">
   {{#if editable}}
+  <div class="clock-name">
+    <input name="name" value="{{actor.name}}" />
+  </div>
+  {{else}}
+  <div class="clock-name">
+    <input name="name" value="{{actor.name}}" readonly />
+  </div>
+  {{/if}}
+  {{#if editable}}
   <div class="clock-progress">
     {{#if (lte actor.flags.clocks.progress 0)}}
     <button name="minus" disabled>

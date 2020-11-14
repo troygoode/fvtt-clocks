@@ -7,7 +7,7 @@ export class ClockSheet extends ActorSheet {
       classes: ["clocks", "sheet", "actor", "npc"],
   	  template: "/modules/clocks/templates/sheet.html",
       width: 350,
-      height: 475,
+      height: 525,
     });
   }
 
@@ -44,12 +44,13 @@ export class ClockSheet extends ActorSheet {
     const tokens = this.actor.getActiveTokens();
     for (const t of tokens) {
       await t.update({
+        name: form.name,
         img: newClock.image.img,
         scale: t.data.scale || 1
       });
     }
 
     // update the Actor
-    await supportedSystem.saveActor(sheet, newClock);
+    await supportedSystem.saveActor(sheet, form.name, newClock);
   }
 }
