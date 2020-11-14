@@ -1,0 +1,39 @@
+<form class="{{cssClass}} clock-form" autocomplete="off">
+  {{#if editable}}
+  <div class="clock-progress">
+    <button name="minus">
+      <i class="fa fa-minus"></i>
+    </button>
+    <button name="plus">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+  {{/if}}
+  <div class="clock-image">
+    <img src="{{actor.img}}" width="350" height="350" />
+  </div>
+  {{#if editable}}
+  <div class="clock-config">
+    <div class="clock-config-group">
+      <label for="theme"><i class="fa fa-palette"></i></label>
+      <select name="theme">
+        {{#select actor.flags.clocks.theme}}
+        <option value="blue">Blue Theme</option>
+        <option value="yellow">Yellow Theme</option>
+        {{/select}}
+      </select>
+    </div>
+    <div class="clock-config-group">
+      <label for="size"><i class="fa fa-chart-pie"></i></label>
+      <select name="size">
+        {{#select actor.flags.clocks.size}}
+        <option value="4">4 Segments</option>
+        <option value="6">6 Segments</option>
+        <option value="8">8 Segments</option>
+        <option value="12">12 Segments</option>
+        {{/select}}
+      </select>
+    </div>
+  </div>
+  {{/if}}
+</form>

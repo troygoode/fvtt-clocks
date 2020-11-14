@@ -1,7 +1,8 @@
 import { Clock } from "./clock.js";
+import { ClockSheet } from "./sheet.js";
+import { systemMappings } from "./systems.js";
 
 const log = (message) => console.log(`Foundry VTT | Clocks | ${message}`);
-log("Init.js");
 
 const onClick = async () => {
   log('Tool Clicked');
@@ -28,6 +29,11 @@ const onClick = async () => {
 
 Hooks.once("init", () => {
   log(`Init ${game.data.system.id}`);
+  const supportedSystem = systemMappings[game.data.system.id];
+  if (supportedSystem) {
+    log("Sheet Registered");
+    Actors.registerSheet(supportedSystem.id, ClockSheet, supportedSystem.sheetConfig);
+  }
 });
 
 Hooks.on("getSceneControlButtons", (controls) => {
@@ -50,6 +56,7 @@ Hooks.on("renderTileHUD", async (_hud, html, tile) => {
 
   const buttonHTML = await renderTemplate('/modules/clocks/templates/buttons.html');
   html.find("div.left").append(buttonHTML).click(async (event) => {
+    log("HUD Clicked")
     // re-get in case there has been an update
     t = canvas.tiles.get(tile._id);
 

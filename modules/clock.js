@@ -2,7 +2,7 @@ export class Clock {
   constructor ({ theme, size, progress } = {}) {
     const p = progress < 0 ? 0 : progress < size ? progress : size;
     this._theme = theme || 'blue';
-    this._size = size || 4;
+    this._size = parseInt(size || 4);
     this._progress = p || 0;
   }
 

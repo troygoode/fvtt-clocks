@@ -1,0 +1,29 @@
+.clocks.sheet .clock-progress {
+  text-align: center;
+}
+.clocks.sheet .clock-progress button {
+  width: 160px;
+  margin: 0;
+}
+.clocks.sheet .clock-image img {
+  border: none;
+}
+.clocks.sheet .clock-config {
+  text-align: center;
+}
+.clocks.sheet .clock-config .clock-config-group {
+  margin-left: 1.5em;
+  display: inline-block;
+}
+.clocks.sheet .clock-config .clock-config-group:first-child {
+  margin-left: 0;
+}
+.clocks.sheet .clock-config .clock-config-group label {
+  margin-right: 3px;
+}
+.clocks.sheet .clock-debug {
+  background-color: #ff0000;
+  color: #ffffff;
+  font-weight: bold;
+  font-family: monospace;
+}
