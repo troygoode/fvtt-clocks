@@ -3,6 +3,8 @@
   "title": "Clocks",
   "description": "Blades in the Dark-esque progress clocks for use in any system.",
   "author": "troygoode",
+  "url": "https://github.com/troygoode/fvtt-clocks",
+  "manifest": "https://raw.githubusercontent.com/troygoode/fvtt-clocks/main/module.json",
   "version": "1.0.0",
   "minimumCoreVersion": "0.7.0",
   "compatibleCoreVersion": "0.7.7",

@@ -15,7 +15,13 @@ https://raw.githubusercontent.com/troygoode/fvtt-clocks/master/module.json
 ## Demos
 
 ![Screenshot](demo.png)
+
+### Clock Actors
+
 ![Actors](demo.actor.gif)
+
+### Clock Tiles
+
 ![Tiles](demo.tile.gif)
 
 ## License
