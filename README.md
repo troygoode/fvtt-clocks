@@ -1,6 +1,6 @@
 # Foundry VTT: Clocks
 
-A module that lets you create [Blades in the Dark](https://bladesinthedark.com/)-esque [progress clocks](https://bladesinthedark.com/progress-clocks) within [Foundry VTT](https://foundryvtt.com/). Supports both ad hoc Tiles for use in a single scene and long-lasting Actor variants.
+Create [Blades in the Dark](https://bladesinthedark.com/)-esque [progress clocks](https://bladesinthedark.com/progress-clocks) within [Foundry VTT](https://foundryvtt.com/). Supports both ad hoc Tile Clocks for use in a single scene and long-lasting Actor Clocks.
 
 ## Installation
 
