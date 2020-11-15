@@ -1,7 +1,10 @@
-import { Clock } from "./clock.js";
+import { Clock } from "../clock.js";
+import DND5E from "./dnd5e.js";
+import BitD from "./blades-in-the-dark.js";
 
-export const themes = {
-  list: ['dog_blink_blue', 'dog_blink_yellow']
+const SUPPORTED_SYSTEMS = {
+  "blades-in-the-dark": BitD,
+  "dnd5e": DND5E
 };
 
 const defaultLoadClockFromActor = (actor) => {
@@ -25,16 +28,17 @@ const defaultPersistClockToActor = async (actor, name, clock) => {
   await actor.setFlag("clocks", "theme", clock.theme);
 }
 
-export const getSystemMapping = (system) => {
-  switch (system) {
-    case 'dnd5e':
-      return {
-        id: "dnd5e",
-        sheetConfig: { types: ["npc"] },
-        loadClockFromActor: defaultLoadClockFromActor,
-        persistClockToActor: defaultPersistClockToActor
-      };
-    default:
-      return undefined;
-  }
-}
+export const getSystemMapping = (id) => {
+  if (!SUPPORTED_SYSTEMS[id]) return undefined;
+
+  const defaultSystemConfig = {
+    loadClockFromActor: defaultLoadClockFromActor,
+    persistClockToActor: defaultPersistClockToActor
+  };
+
+  return {
+    id,
+    ...defaultSystemConfig,
+    ...SUPPORTED_SYSTEMS[id]
+  };
+};

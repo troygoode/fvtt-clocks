@@ -1,14 +1,21 @@
 import { Clock } from "./clock.js";
-import { getSystemMapping } from "./config.js";
+import { getSystemMapping } from "./systems/index.js";
 
 export class ClockSheet extends ActorSheet {
   static get defaultOptions() {
-	  return mergeObject(super.defaultOptions, {
-      classes: ["clocks", "sheet", `clocks-system-${game.data.system.id}`, "actor", "npc"],
-  	  template: "/modules/clocks/templates/sheet.html",
-      width: 350,
-      height: 525,
-    });
+    const supportedSystem = getSystemMapping(game.data.system.id);
+    if (!supportedSystem) return super.defaultOptions;
+
+	  return mergeObject(
+      super.defaultOptions,
+      {
+        classes: ["clocks", "sheet", `clocks-system-${game.data.system.id}`, "actor", "npc"],
+        template: "/modules/clocks/templates/sheet.html",
+        width: 350,
+        height: 525,
+        ...supportedSystem.sheetDefaultOptions
+      }
+    );
   }
 
   async _updateObject(event, form) {
