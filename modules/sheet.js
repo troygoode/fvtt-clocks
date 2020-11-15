@@ -1,10 +1,10 @@
 import { Clock } from "./clock.js";
-import { systemMappings } from "./config.js";
+import { getSystemMapping } from "./config.js";
 
 export class ClockSheet extends ActorSheet {
   static get defaultOptions() {
 	  return mergeObject(super.defaultOptions, {
-      classes: ["clocks", "sheet", "actor", "npc"],
+      classes: ["clocks", "sheet", `clocks-system-${game.data.system.id}`, "actor", "npc"],
   	  template: "/modules/clocks/templates/sheet.html",
       width: 350,
       height: 525,
@@ -12,11 +12,11 @@ export class ClockSheet extends ActorSheet {
   }
 
   async _updateObject(event, form) {
-    const supportedSystem = systemMappings[game.data.system.id];
+    const supportedSystem = getSystemMapping(game.data.system.id);
     if (!supportedSystem) return;
 
     const sheet = this.object;
-    const oldClock = supportedSystem.loadClock(sheet);
+    const oldClock = supportedSystem.loadClockFromActor(sheet);
 
     let newClock = oldClock;
     switch (event.submitter ? event.submitter.name : undefined) {
@@ -51,6 +51,6 @@ export class ClockSheet extends ActorSheet {
     }
 
     // update the Actor
-    await supportedSystem.saveActor(sheet, form.name, newClock);
+    await supportedSystem.persistClockToActor(sheet, form.name, newClock);
   }
 }

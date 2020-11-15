@@ -1,6 +1,6 @@
 import { Clock } from "./clock.js";
 import { ClockSheet } from "./sheet.js";
-import { systemMappings } from "./config.js";
+import { getSystemMapping } from "./config.js";
 
 const log = (message) => console.log(`Foundry VTT | Clocks | ${message}`);
 
@@ -29,10 +29,12 @@ const onClick = async () => {
 
 Hooks.once("init", () => {
   log(`Init ${game.data.system.id}`);
-  const supportedSystem = systemMappings[game.data.system.id];
+  const supportedSystem = getSystemMapping(game.data.system.id);
   if (supportedSystem) {
     log("Sheet Registered");
     Actors.registerSheet(supportedSystem.id, ClockSheet, supportedSystem.sheetConfig);
+  } else {
+    log("System Unsuppored; No Actor Functionality");
   }
 });
 
