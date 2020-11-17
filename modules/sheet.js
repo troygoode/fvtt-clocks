@@ -30,7 +30,7 @@ export class ClockSheet extends ActorSheet {
     log(`Prior: ${oldClock.toString()}`);
     let newClock = oldClock;
 
-    const submitter = event.submitter ? event.submitter.name : undefined;
+    const submitter = event.submitter ? $(event.submitter).attr("name") : undefined;
     log(`Submitter: ${submitter}`);
     switch (submitter) {
       case 'minus':
