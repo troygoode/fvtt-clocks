@@ -1,13 +1,23 @@
 import { Clock } from "./clock.js";
 import { getSystemMapping } from "./systems/index.js";
+import { log, warn } from "./util.js";
 
-const log = (message) => console.log(`Foundry VTT | Clocks | ${message}`);
+const DISPLAY_NAME = {
+  ALWAYS_FOR_EVERYONE: 50
+};
+const DISPOSITION = {
+  NEUTRAL: 0
+};
+const DEFAULT_TOKEN = {
+  scale: 1,
+  disposition: DISPOSITION.NEUTRAL,
+  displayName: DISPLAY_NAME.ALWAYS_FOR_EVERYONE,
+  actorLink: true,
+};
 
 export class ClockSheet extends ActorSheet {
   static get defaultOptions() {
     const supportedSystem = getSystemMapping(game.data.system.id);
-    if (!supportedSystem) return super.defaultOptions;
-
 	  return mergeObject(
       super.defaultOptions,
       {
@@ -20,51 +30,83 @@ export class ClockSheet extends ActorSheet {
     );
   }
 
-  async _updateObject(event, form) {
-    log("Update Object");
+  static register () {
     const supportedSystem = getSystemMapping(game.data.system.id);
-    if (!supportedSystem) return;
+    Actors.registerSheet(supportedSystem.id, ClockSheet, supportedSystem.registerSheetOptions);
+    log("Sheet Registered");
+  }
 
-    const sheet = this.object;
-    const oldClock = supportedSystem.loadClockFromActor(sheet);
-    log(`Prior: ${oldClock.toString()}`);
-    let newClock = oldClock;
+  constructor (...args) {
+    super(...args);
+    this._system = getSystemMapping(game.data.system.id);
+  }
 
-    const submitter = event.submitter ? $(event.submitter).attr("name") : undefined;
-    log(`Submitter: ${submitter}`);
-    switch (submitter) {
-      case 'minus':
-        newClock = newClock.decrement();
-        break;
-      case 'plus':
-        newClock = newClock.increment();
-        break;
-      case 'reset':
-        newClock = new Clock({
-          progress: 0,
-          size: newClock.size,
-          theme: newClock.theme
-        });
-        break;
-    }
-    newClock = new Clock({
-      progress: newClock.progress,
+  get system () {
+    return this._system;
+  }
+
+  activateListeners (html) {
+    super.activateListeners(html);
+
+    html.find("button[name=minus]").click(async (ev) => {
+      ev.preventDefault();
+      const oldClock = this.system.loadClockFromActor({ actor: this.actor });
+      this.updateClock(oldClock.decrement());
+    });
+
+    html.find("button[name=plus]").click(async (ev) => {
+      ev.preventDefault();
+      const oldClock = this.system.loadClockFromActor({ actor: this.actor });
+      this.updateClock(oldClock.increment());
+    });
+
+    html.find("button[name=reset]").click(async (ev) => {
+      ev.preventDefault();
+      const oldClock = this.system.loadClockFromActor({ actor: this.actor });
+      this.updateClock(new Clock({
+        theme: oldClock.theme,
+        progress: 0,
+        size: oldClock.size
+      }));
+    });
+  }
+
+  async _updateObject(_event, form) {
+    await this.object.update({
+      name: form.name
+    });
+
+    const oldClock = this.system.loadClockFromActor({ actor: this.actor });
+    let newClock = new Clock({
+      progress: oldClock.progress,
       size: form.size,
       theme: form.theme
     });
-    log(`Next: ${newClock.toString()}`);
+    await this.updateClock(newClock);
+  }
+
+  async updateClock(clock) {
+    const actor = this.actor;
 
     // update associated tokens
-    const tokens = this.actor.getActiveTokens();
+    const tokens = actor.getActiveTokens();
     for (const t of tokens) {
       await t.update({
-        name: form.name,
-        img: newClock.image.img,
-        scale: t.data.scale || 1
+        name: actor.name,
+        img: clock.image.img,
+        actorLink: true
       });
     }
 
     // update the Actor
-    await supportedSystem.persistClockToActor(sheet, form.name, newClock);
+    const persistObj = await this.system.persistClockToActor({ actor, clock });
+    const visualObj = {
+      img: clock.image.img,
+      token: {
+        img: clock.image.img,
+        ...DEFAULT_TOKEN
+      }
+    };
+    await actor.update(mergeObject(visualObj, persistObj));
   }
 }

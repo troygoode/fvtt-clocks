@@ -7,7 +7,7 @@ const SUPPORTED_SYSTEMS = {
   "dnd5e": DND5E
 };
 
-const defaultLoadClockFromActor = (actor) => {
+const defaultLoadClockFromActor = ({ actor }) => {
   return new Clock({
     progress: actor.getFlag("clocks", "progress"),
     size: actor.getFlag("clocks", "size"),
@@ -15,18 +15,17 @@ const defaultLoadClockFromActor = (actor) => {
   });
 };
 
-const defaultPersistClockToActor = async (actor, name, clock) => {
-  await actor.update({
-    name: name,
-    img: clock.image.img,
-    token: {
-      img: clock.image.img
+const defaultPersistClockToActor = async ({ actor, clock }) => {
+  return {
+    flags: {
+      clocks: {
+        progress: clock.progress,
+        size: clock.size,
+        theme: clock.theme
+      }
     }
-  });
-  await actor.setFlag("clocks", "progress", clock.progress);
-  await actor.setFlag("clocks", "size", clock.size);
-  await actor.setFlag("clocks", "theme", clock.theme);
-}
+  };
+};
 
 export const getSystemMapping = (id) => {
   const defaultSystemConfig = {

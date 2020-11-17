@@ -101,6 +101,13 @@ export class Clock {
     });
   }
 
+  isEqual (clock) {
+    return clock
+      && clock._progress === this._progress
+      && clock._size === this._size
+      && clock._theme === this._theme;
+  }
+
   toString () {
     return `${this._progress}/${this._size} • ${this._theme}`;
   }
