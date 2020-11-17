@@ -100,4 +100,8 @@ export class Clock {
       progress: old.progress - 1
     });
   }
+
+  toString () {
+    return `${this._progress}/${this._size} • ${this._theme}`;
+  }
 }

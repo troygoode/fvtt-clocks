@@ -1,6 +1,8 @@
 import { Clock } from "./clock.js";
 import { getSystemMapping } from "./systems/index.js";
 
+const log = (message) => console.log(`Foundry VTT | Clocks | ${message}`);
+
 export class ClockSheet extends ActorSheet {
   static get defaultOptions() {
     const supportedSystem = getSystemMapping(game.data.system.id);
@@ -19,14 +21,18 @@ export class ClockSheet extends ActorSheet {
   }
 
   async _updateObject(event, form) {
+    log("Update Object");
     const supportedSystem = getSystemMapping(game.data.system.id);
     if (!supportedSystem) return;
 
     const sheet = this.object;
     const oldClock = supportedSystem.loadClockFromActor(sheet);
-
+    log(`Prior: ${oldclock.tostring()}`);
     let newClock = oldClock;
-    switch (event.submitter ? event.submitter.name : undefined) {
+
+    const submitter = event.submitter ? event.submitter.name : undefined;
+    log(`Submitter: ${submitter}`);
+    switch (submitter) {
       case 'minus':
         newClock = newClock.decrement();
         break;
@@ -46,6 +52,7 @@ export class ClockSheet extends ActorSheet {
       size: form.size,
       theme: form.theme
     });
+    log(`Next: ${newClock.tostring()}`);
 
     // update associated tokens
     const tokens = this.actor.getActiveTokens();
