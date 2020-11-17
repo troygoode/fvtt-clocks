@@ -27,7 +27,7 @@ export class ClockSheet extends ActorSheet {
 
     const sheet = this.object;
     const oldClock = supportedSystem.loadClockFromActor(sheet);
-    log(`Prior: ${oldclock.tostring()}`);
+    log(`Prior: ${oldClock.toString()}`);
     let newClock = oldClock;
 
     const submitter = event.submitter ? event.submitter.name : undefined;
@@ -52,7 +52,7 @@ export class ClockSheet extends ActorSheet {
       size: form.size,
       theme: form.theme
     });
-    log(`Next: ${newClock.tostring()}`);
+    log(`Next: ${newClock.toString()}`);
 
     // update associated tokens
     const tokens = this.actor.getActiveTokens();
