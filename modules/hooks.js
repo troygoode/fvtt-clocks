@@ -25,7 +25,7 @@ const onClick = async () => {
     flags: clock.flags
   });
   canvas.scene.createEmbeddedEntity('Tile', tile.data);
-}
+};
 
 Hooks.once("init", () => {
   log(`Init ${game.data.system.id}`);

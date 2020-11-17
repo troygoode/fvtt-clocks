@@ -29,12 +29,20 @@ const defaultPersistClockToActor = async (actor, name, clock) => {
 }
 
 export const getSystemMapping = (id) => {
-  if (!SUPPORTED_SYSTEMS[id]) return undefined;
-
   const defaultSystemConfig = {
     loadClockFromActor: defaultLoadClockFromActor,
     persistClockToActor: defaultPersistClockToActor
   };
+
+  if (!SUPPORTED_SYSTEMS[id]) {
+    return {
+      id,
+      ...defaultSystemConfig,
+      registerSheetOptions: {
+        types: game.data.system.template.Actor.types
+      }
+    };
+  }
 
   return {
     id,
