@@ -1,9 +1,25 @@
+const nextIndexInArray = (arr, el) => {
+  const idx = arr.indexOf(el);
+  return (idx < 0 || idx >= arr.length) ? 0 : idx + 1;
+}
+
 export class Clock {
+  static get sizes () {
+    return [4, 6, 8, 12];
+  }
+
+  static get themes () {
+    return ["dog_blink_blue", "dog_blink_yellow"];
+  }
+
   constructor ({ theme, size, progress } = {}) {
-    const p = progress < 0 ? 0 : progress < size ? progress : size;
-    this._theme = theme || 'dog_blink_blue';
-    this._size = parseInt(size || 4);
+    const isSupportedSize = size && Clock.sizes.indexOf(parseInt(size)) >= 0;
+    this._size = isSupportedSize ? parseInt(size) : Clock.sizes[0];
+
+    const p = (!progress || progress < 0) ? 0 : progress < this._size ? progress : this._size;
     this._progress = p || 0;
+
+    this._theme = theme || Clock.themes[0];
   }
 
   get theme () {
@@ -37,49 +53,18 @@ export class Clock {
   }
 
   cycleSize () {
-    const old = this;
-    let newSize;
-
-    // 4 • 6 • 8 • 12
-    switch(old.size) {
-      case 4:
-        newSize = 6;
-        break;
-      case 6:
-        newSize = 8;
-        break;
-      case 8:
-        newSize = 12;
-        break;
-      default:
-        newSize = 4;
-        break;
-    }
-
     return new Clock({
-      theme: old.theme,
-      size: newSize,
-      progress: old.progress
+      theme: this.theme,
+      size: Clock.sizes[nextIndexInArray(Clock.sizes, this.size)],
+      progress: this.progress
     });
   }
 
   cycleTheme () {
-    const old = this;
-    let newTheme;
-
-    switch(old.theme) {
-      case 'dog_blink_blue':
-        newTheme = 'dog_blink_yellow';
-        break;
-      default:
-        newTheme = 'dog_blink_blue';
-        break;
-    }
-
     return new Clock({
-      theme: newTheme,
-      size: old.size,
-      progress: old.progress
+      theme: Clock.themes[nextIndexInArray(Clock.themes, this.theme)],
+      size: this.size,
+      progress: this.progress
     });
   }
 

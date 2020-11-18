@@ -12,7 +12,7 @@ const DEFAULT_TOKEN = {
   scale: 1,
   disposition: DISPOSITION.NEUTRAL,
   displayName: DISPLAY_NAME.ALWAYS_FOR_EVERYONE,
-  actorLink: true,
+  actorLink: true
 };
 
 export class ClockSheet extends ActorSheet {
@@ -45,24 +45,44 @@ export class ClockSheet extends ActorSheet {
     return this._system;
   }
 
+  getData () {
+    const clock = new Clock(this.system.loadClockFromActor({ actor: this.actor }));
+    return mergeObject(super.getData(), {
+      clock: {
+        progress: clock.progress,
+        size: clock.size,
+        theme: clock.theme,
+        image: {
+          url: clock.image.img,
+          width: clock.image.width,
+          height: clock.image.height
+        },
+        settings: {
+          sizes: Clock.sizes,
+          themes: Clock.themes
+        }
+      }
+    });
+  }
+
   activateListeners (html) {
     super.activateListeners(html);
 
     html.find("button[name=minus]").click(async (ev) => {
       ev.preventDefault();
-      const oldClock = this.system.loadClockFromActor({ actor: this.actor });
+      const oldClock = new Clock(this.system.loadClockFromActor({ actor: this.actor }));
       this.updateClock(oldClock.decrement());
     });
 
     html.find("button[name=plus]").click(async (ev) => {
       ev.preventDefault();
-      const oldClock = this.system.loadClockFromActor({ actor: this.actor });
+      const oldClock = new Clock(this.system.loadClockFromActor({ actor: this.actor }));
       this.updateClock(oldClock.increment());
     });
 
     html.find("button[name=reset]").click(async (ev) => {
       ev.preventDefault();
-      const oldClock = this.system.loadClockFromActor({ actor: this.actor });
+      const oldClock = new Clock(this.system.loadClockFromActor({ actor: this.actor }));
       this.updateClock(new Clock({
         theme: oldClock.theme,
         progress: 0,
@@ -76,7 +96,7 @@ export class ClockSheet extends ActorSheet {
       name: form.name
     });
 
-    const oldClock = this.system.loadClockFromActor({ actor: this.actor });
+    const oldClock = new Clock(this.system.loadClockFromActor({ actor: this.actor }));
     let newClock = new Clock({
       progress: oldClock.progress,
       size: form.size,

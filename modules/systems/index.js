@@ -1,4 +1,3 @@
-import { Clock } from "../clock.js";
 import DND5E from "./dnd5e.js";
 import BitD from "./blades-in-the-dark.js";
 
@@ -8,14 +7,14 @@ const SUPPORTED_SYSTEMS = {
 };
 
 const defaultLoadClockFromActor = ({ actor }) => {
-  return new Clock({
+  return {
     progress: actor.getFlag("clocks", "progress"),
     size: actor.getFlag("clocks", "size"),
     theme: actor.getFlag("clocks", "theme")
-  });
+  };
 };
 
-const defaultPersistClockToActor = async ({ actor, clock }) => {
+const defaultPersistClockToActor = async ({ clock }) => {
   return {
     flags: {
       clocks: {

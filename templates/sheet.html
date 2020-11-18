@@ -10,7 +10,7 @@
   {{/if}}
   {{#if editable}}
   <div class="clock-progress">
-    {{#if (lte actor.flags.clocks.progress 0)}}
+    {{#if (lte clock.progress 0)}}
     <button name="minus" disabled>
       <i class="fa fa-minus"></i>
     </button>
@@ -22,7 +22,7 @@
     <button name="reset">
       <i class="fa fa-redo"></i>
     </button>
-    {{#if (gte actor.flags.clocks.progress actor.flags.clocks.size)}}
+    {{#if (gte clock.progress clock.size)}}
     <button name="plus" disabled>
       <i class="fa fa-plus"></i>
     </button>
@@ -34,27 +34,27 @@
   </div>
   {{/if}}
   <div class="clock-image">
-    <img src="{{actor.img}}" width="350" height="350" />
+    <img src="{{clock.image.url}}" width="{{clock.image.width}}" height="{{clock.image.height}}" />
   </div>
   {{#if editable}}
   <div class="clock-config">
     <div class="clock-config-group theme">
       <label for="theme"><i class="fa fa-palette"></i></label>
       <select name="theme">
-        {{#select actor.flags.clocks.theme}}
-        <option value="dog_blink_blue">dog_blink_blue</option>
-        <option value="dog_blink_yellow">dog_blink_yellow</option>
+        {{#select clock.theme}}
+        {{#each clock.settings.themes as |theme|}}
+        <option value="{{theme}}">{{theme}}</option>
+        {{/each}}
         {{/select}}
       </select>
     </div>
     <div class="clock-config-group">
       <label for="size"><i class="fa fa-chart-pie"></i></label>
       <select name="size">
-        {{#select actor.flags.clocks.size}}
-        <option value="4">4</option>
-        <option value="6">6</option>
-        <option value="8">8</option>
-        <option value="12">12</option>
+        {{#select clock.size}}
+        {{#each clock.settings.sizes as |size|}}
+        <option value="{{size}}">{{size}}</option>
+        {{/each}}
         {{/select}}
       </select>
     </div>
