@@ -8,7 +8,7 @@
   "download": "https://github.com/troygoode/fvtt-clocks/archive/v1.3.5.zip",
   "version": "1.3.5",
   "minimumCoreVersion": "0.7.0",
-  "compatibleCoreVersion": "0.7.9",
+  "compatibleCoreVersion": "9",
   "esmodules": ["modules/hooks.js"],
   "styles": ["styles/clocks.css"]
 }
