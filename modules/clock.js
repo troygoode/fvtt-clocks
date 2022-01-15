@@ -9,7 +9,7 @@ export class Clock {
   }
 
   static get themes () {
-    return ["dog_blink_blue", "dog_blink_yellow"];
+    return ["dog_blink_blue", "dog_blink_yellow", "dog_blink_green","dog_blink_red","dog_blink_purple","dog_blink_white",];
   }
 
   constructor ({ theme, size, progress } = {}) {

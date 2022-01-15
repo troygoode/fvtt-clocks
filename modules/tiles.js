@@ -9,7 +9,7 @@ const onClick = async () => {
     y: ((canvas.dimensions.sceneRect.height - clock.image.height) / 2) + canvas.dimensions.paddingY
   };
 
-  const tile = new Tile({
+  const tile = new TileDocument({
     img: clock.image.img,
     width: clock.image.width,
     height: clock.image.height,
@@ -21,7 +21,7 @@ const onClick = async () => {
     locked: false,
     flags: clock.flags
   });
-  canvas.scene.createEmbeddedEntity('Tile', tile.data);
+  canvas.scene.createEmbeddedDocuments('Tile', [tile.data]);
 };
 
 export default {
@@ -38,7 +38,7 @@ export default {
 
   renderTileHUD: async (_hud, html, tile) => {
     log("Render")
-    let t = canvas.tiles.get(tile._id);
+    let t = canvas.foreground.get(tile._id);
     if (!t.data.flags.clocks) {
       return;
     }
@@ -47,7 +47,7 @@ export default {
     html.find("div.left").append(buttonHTML).click(async (event) => {
       log("HUD Clicked")
       // re-get in case there has been an update
-      t = canvas.tiles.get(tile._id);
+      t = canvas.foreground.get(tile._id);
 
       const oldClock = new Clock(t.data.flags.clocks);
       let newClock;
@@ -67,7 +67,7 @@ export default {
         return error("ERROR: Unknown TileHUD Button");
       }
 
-      await t.update({
+      await t.document.update({
         img: newClock.image.img,
         flags: newClock.flags
       });
