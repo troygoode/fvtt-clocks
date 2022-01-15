@@ -36,7 +36,7 @@ export class Clock {
 
   get image () {
     return { 
-      img: `/modules/clocks/themes/${this.theme}/${this.size}clock_${this.progress}.png`,
+      img: `/modules/clocks/themes/${this.theme}/${this.size}clock_${this.progress}.webp`,
       width: 350,
       height: 350
     };
